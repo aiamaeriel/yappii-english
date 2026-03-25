@@ -975,11 +975,37 @@ nav,.hero,.tagline-strip,.video-section,.tutor-section,.ratings-section,
         <!-- Bio -->
         <div class="meet-bio" data-ani="right">
           <div class="meet-bio-title">About Aia</div>
-          <p>Hello learners! I studied BS in Business Administration, majoring in Marketing Management, and I'm TESOL/TEFL certified. Since then, I've been passionately pursuing my career in English teaching.</p>
-          <p>I aim to improve your language skills without breaking a sweat, all within a fun and supportive environment. Let's make learning English an exciting journey where you feel confident and motivated every step of the way!</p>
-          <p>I believe in creating a cheerful and welcoming environment where students feel at ease expressing themselves. I invest considerable effort in guiding you to reach your fullest potential as a fluent English speaker.</p>
-          <p>I'm here to support you no matter your age or background. Each lesson is tailored just for you. Catch you up later!</p>
-          <p class="ps">Ps. I'm open for Filipino language learning as well!</p>
+
+          <div class="lang-switch" aria-label="Language selector" role="tablist">
+            <button class="lang-btn active" data-lang="en" role="tab" aria-selected="true">EN</button>
+            <button class="lang-btn" data-lang="de" role="tab" aria-selected="false">DE</button>
+            <button class="lang-btn" data-lang="pl" role="tab" aria-selected="false">PL</button>
+          </div>
+
+          <div class="bio-block bio-en">
+            <p>Hello learners! I studied BS in Business Administration, majoring in Marketing Management, and I'm TESOL/TEFL certified. Since then, I've been passionately pursuing my career in English teaching.</p>
+            <p>I aim to improve your language skills without breaking a sweat, all within a fun and supportive environment. Let's make learning English an exciting journey where you feel confident and motivated every step of the way!</p>
+            <p>I believe in creating a cheerful and welcoming environment where students feel at ease expressing themselves. I invest considerable effort in guiding you to reach your fullest potential as a fluent English speaker.</p>
+            <p>I'm here to support you no matter your age or background. Each lesson is tailored just for you. Catch you up later!</p>
+            <p class="ps">Ps. I'm open for Filipino language learning as well!</p>
+          </div>
+
+          <div class="bio-block bio-de" style="display:none;">
+            <p>Hallo Lernende! Ich habe einen Bachelor in Betriebswirtschaft mit Schwerpunkt Marketing Management und bin TESOL/TEFL-zertifiziert. Seitdem verfolge ich mit Leidenschaft meine Karriere im Englischunterricht.</p>
+            <p>Mein Ziel ist es, deine Sprachkenntnisse ganz entspannt in einer lustigen und unterstützenden Umgebung zu verbessern. Lass uns das Englischlernen zu einer spannenden Reise machen, bei der du dich bei jedem Schritt selbstbewusst und motiviert fühlst!</p>
+            <p>Ich glaube daran, eine fröhliche und einladende Lernatmosphäre zu schaffen, in der sich Schülerinnen und Schüler wohl fühlen, sich auszudrücken. Ich setze viel Energie darauf, dich zu begleiten, damit du dein volles Potenzial als fließend sprechende Person erreichst.</p>
+            <p>Ich bin hier, um dich unabhängig von Alter oder Hintergrund zu unterstützen. Jede Lektion wird speziell für dich angepasst. Bis bald!</p>
+            <p class="ps">P.S. Ich biete auch Unterricht in Filipino/Tagalog an!</p>
+          </div>
+
+          <div class="bio-block bio-pl" style="display:none;">
+            <p>Witajcie! Ukończyłam studia licencjackie z zarządzania biznesem, specjalizacja Marketing Management, i posiadam certyfikat TESOL/TEFL. Od tego czasu z pasją rozwijam swoją karierę jako nauczycielka angielskiego.</p>
+            <p>Moim celem jest poprawić Twoje umiejętności językowe bez stresu, w przyjaznej i wspierającej atmosferze. Zróbmy z nauki angielskiego ekscytującą podróż, podczas której poczujesz się pewnie i zmotywowany na każdym kroku!</p>
+            <p>Wierzę w tworzenie radosnej i przyjaznej atmosfery, w której uczniowie czują się swobodnie w wyrażaniu siebie. Wkładam dużo wysiłku, aby pomóc Ci osiągnąć pełny potencjał jako biegle posługujący się językiem angielskim.</p>
+            <p>Jestem tu, by Cię wspierać niezależnie od wieku czy pochodzenia. Każda lekcja jest dopasowana specjalnie do Ciebie. Do zobaczenia!</p>
+            <p class="ps">P.S. Oferuję także lekcje języka filipińskiego (Tagalog)!</p>
+          </div>
+
           <div class="meet-spec-row">
             <span class="meet-spec">Conversational English</span>
             <span class="meet-spec">Business English</span>
@@ -3232,6 +3258,36 @@ nav,.hero,.tagline-strip,.video-section,.tutor-section,.ratings-section,
         if (btn) btn.textContent = '☀️ Light';
       }
     } catch(e){}
+  })();
+  </script>
+  <style>
+    .lang-switch{margin:12px 0 18px;display:flex;gap:8px}
+    .lang-btn{background:transparent;border:1.2px solid var(--pink-light);padding:6px 10px;border-radius:8px;cursor:pointer;font-weight:700;color:var(--mid)}
+    .lang-btn.active{background:var(--rose);color:var(--off-white);border-color:var(--rose)}
+    .bio-block p{margin-bottom:12px}
+  </style>
+
+  <script>
+  (function(){
+    function setLang(lang){
+      var container = document.querySelector('.meet-bio');
+      if(!container) return;
+      ['en','de','pl'].forEach(function(l){
+        var el = container.querySelector('.bio-'+l);
+        if(el) el.style.display = (l===lang)?'':'none';
+        var btn = container.querySelector('.lang-btn[data-lang="'+l+'"]');
+        if(btn){ btn.classList.toggle('active', l===lang); btn.setAttribute('aria-selected', l===lang?'true':'false'); }
+      });
+      try{ localStorage.setItem('yappii-lang', lang); }catch(e){}
+    }
+    document.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('.lang-btn');
+      if(b && b.dataset && b.dataset.lang) setLang(b.dataset.lang);
+    });
+    document.addEventListener('DOMContentLoaded', function(){
+      var stored = (function(){ try{ return localStorage.getItem('yappii-lang'); }catch(e){return null;} })() || 'en';
+      setLang(stored);
+    });
   })();
   </script>
 </body>
